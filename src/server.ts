@@ -18,6 +18,6 @@ app.use("*", corstOpts);
 
 server.applyMiddleware({ app, path });
 
-app.listen({ port: 8000 }, () => {
+app.listen({ port: process.env.PORT || 4000 }, () => {
   console.log(`API started on http://localhost:8000${path}`);
 });
