@@ -7,17 +7,18 @@ const app = express();
 
 const server = new ApolloServer({
   schema,
+  introspection: true,
   playground: true,
 });
 
 const corstOpts = cors();
-
 const path = "/api/v1"
+const port = process.env.PORT || 4000;
 
 app.use("*", corstOpts);
 
 server.applyMiddleware({ app, path });
 
-app.listen({ port: process.env.PORT || 4000 }, () => {
-  console.log(`API started on http://localhost:8000${path}`);
+app.listen({ port }, () => {
+  console.log(`API started on http://localhost:${port}${path}`);
 });
