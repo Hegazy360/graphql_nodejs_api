@@ -1,0 +1,4 @@
+type Courier {
+  id: ID! # The "!" means required
+  max_capacity: Int
+}
