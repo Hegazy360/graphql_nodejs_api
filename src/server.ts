@@ -7,6 +7,8 @@ const app = express();
 
 const server = new ApolloServer({
   schema,
+  // Enable live graphql playground on production
+  // for testing purposes, not recommended in a real production environment
   introspection: true,
   playground: true,
 });

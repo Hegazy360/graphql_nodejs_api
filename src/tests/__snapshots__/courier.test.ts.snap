@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`I can fetch all couriers 1`] = `
+Object {
+  "data": Object {
+    "getAllCouriers": Array [
+      Object {
+        "id": "1",
+      },
+      Object {
+        "id": "2",
+      },
+      Object {
+        "id": "3",
+      },
+      Object {
+        "id": "4",
+      },
+    ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`I can lookup couriers by capacity 1`] = `
+Object {
+  "data": Object {
+    "lookUpCouriersByMaxCapacity": Array [
+      Object {
+        "id": "2",
+        "max_capacity": 20,
+      },
+      Object {
+        "id": "3",
+        "max_capacity": 30,
+      },
+      Object {
+        "id": "4",
+        "max_capacity": 45,
+      },
+    ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`I can remove a courier's max capacity 1`] = `
+Object {
+  "data": Object {
+    "removeCourierCapacity": Object {
+      "id": "1",
+      "max_capacity": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`I can update a courier's max capacity 1`] = `
+Object {
+  "data": Object {
+    "updateCourierCapacity": Object {
+      "id": "1",
+      "max_capacity": 12,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`I can't update a courier's max capacity without passing a new maximum capacity 1`] = `
+Object {
+  "data": undefined,
+  "errors": Array [
+    [GraphQLError: Variable "$max_capacity" of required type "Int!" was not provided.],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`I can't update a courier's max capacity without passing a valid id 1`] = `
+Object {
+  "data": Object {
+    "updateCourierCapacity": null,
+  },
+  "errors": Array [
+    [GraphQLError: Courier not found.],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`I can't update a courier's max capacity without passing an id 1`] = `
+Object {
+  "data": undefined,
+  "errors": Array [
+    [GraphQLError: Variable "$id" of required type "ID!" was not provided.],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
