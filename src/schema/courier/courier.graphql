@@ -1,4 +1,5 @@
 type Courier {
   id: ID!
   max_capacity: Int
+  available_capacity: Int
 }

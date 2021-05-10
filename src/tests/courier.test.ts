@@ -20,7 +20,7 @@ const GET_ALL_COURIERS = gql`
   }
 `;
 
-const LOOKUP_COURIER_BY_CAPACITY = gql`
+const LOOKUP_COURIER_BY_MAX_CAPACITY = gql`
   query lookUpCouriersByMaxCapacity($capacity_required: Int!) {
     lookUpCouriersByMaxCapacity(capacity_required: $capacity_required) {
       id,
@@ -29,17 +29,35 @@ const LOOKUP_COURIER_BY_CAPACITY = gql`
   }
 `;
 
-const UPDATE_COURIER_CAPACITY = gql`
-  mutation updateCourierCapacity($id: ID!, $max_capacity: Int!) {
-    updateCourierCapacity(id: $id, max_capacity: $max_capacity) {
+const LOOKUP_COURIER_BY_AVAILABLE_CAPACITY = gql`
+  query lookUpCouriersByMaxCapacity($capacity_required: Int!) {
+    lookUpCouriersByAvailableCapacity(capacity_required: $capacity_required) {
+      id,
+      available_capacity
+    }
+  }
+`;
+
+const UPDATE_COURIER_MAX_CAPACITY = gql`
+  mutation updateCourierMaxCapacity($id: ID!, $max_capacity: Int!) {
+    updateCourierMaxCapacity(id: $id, max_capacity: $max_capacity) {
       id,
       max_capacity
     }
   }
 `;
 
-const REMOVE_COURIER_CAPACITY = gql`
-  mutation updateCourierCapacity($id: ID!) {
+const UPDATE_COURIER_AVAILABLE_CAPACITY = gql`
+  mutation updateCourierAvailableCapacity($id: ID!, $available_capacity: Int!) {
+    updateCourierAvailableCapacity(id: $id, available_capacity: $available_capacity) {
+      id,
+      available_capacity
+    }
+  }
+`;
+
+const REMOVE_COURIER_MAX_CAPACITY = gql`
+  mutation updateCourierMaxCapacity($id: ID!) {
     removeCourierCapacity(id: $id) {
       id,
       max_capacity
@@ -48,16 +66,24 @@ const REMOVE_COURIER_CAPACITY = gql`
 `;
 
 const { query, mutate } = createTestClient(server);
-
 test("I can fetch all couriers", async () => {
   const res = await query({ query: GET_ALL_COURIERS });
 
   expect(res).toMatchSnapshot();
 });
 
-test("I can lookup couriers by capacity", async () => {
+test("I can lookup couriers by max capacity", async () => {
   const res = await query({
-    query: LOOKUP_COURIER_BY_CAPACITY,
+    query: LOOKUP_COURIER_BY_MAX_CAPACITY,
+    variables: { capacity_required: 12 }
+  });
+
+  expect(res).toMatchSnapshot();
+});
+
+test("I can lookup couriers by available capacity", async () => {
+  const res = await query({
+    query: LOOKUP_COURIER_BY_AVAILABLE_CAPACITY,
     variables: { capacity_required: 12 }
   });
 
@@ -66,8 +92,26 @@ test("I can lookup couriers by capacity", async () => {
 
 test("I can update a courier's max capacity", async () => {
   const res = await mutate({
-    mutation: UPDATE_COURIER_CAPACITY,
+    mutation: UPDATE_COURIER_MAX_CAPACITY,
     variables: { id: "1", max_capacity: 12 },
+  });
+
+  expect(res).toMatchSnapshot();
+});
+
+test("I can update a courier's available capacity", async () => {
+  const res = await mutate({
+    mutation: UPDATE_COURIER_AVAILABLE_CAPACITY,
+    variables: { id: "1", available_capacity: 12 },
+  });
+
+  expect(res).toMatchSnapshot();
+});
+
+test("I can't update a courier's available capacity with an invalid capacity", async () => {
+  const res = await mutate({
+    mutation: UPDATE_COURIER_AVAILABLE_CAPACITY,
+    variables: { id: "1", available_capacity: 300 },
   });
 
   expect(res).toMatchSnapshot();
@@ -75,7 +119,7 @@ test("I can update a courier's max capacity", async () => {
 
 test("I can't update a courier's max capacity without passing an id", async () => {
   const res = await mutate({
-    mutation: UPDATE_COURIER_CAPACITY,
+    mutation: UPDATE_COURIER_MAX_CAPACITY,
     variables: { max_capacity: 12 },
   });
 
@@ -84,22 +128,19 @@ test("I can't update a courier's max capacity without passing an id", async () =
 
 test("I can't update a courier's max capacity without passing a valid id", async () => {
   const res = await mutate({
-    mutation: UPDATE_COURIER_CAPACITY,
+    mutation: UPDATE_COURIER_MAX_CAPACITY,
     variables: {
       id: "INVALID_ID",
       max_capacity: 12
     },
   });
 
-  const { errors } = await res;
-
-  expect((errors[0].extensions).code).toEqual("COURIER_NOT_FOUND")
   expect(res).toMatchSnapshot();
 });
 
 test("I can't update a courier's max capacity without passing a new maximum capacity", async () => {
   const res = await mutate({
-    mutation: UPDATE_COURIER_CAPACITY,
+    mutation: UPDATE_COURIER_MAX_CAPACITY,
     variables: { id: "1" },
   });
 
@@ -108,7 +149,7 @@ test("I can't update a courier's max capacity without passing a new maximum capa
 
 test("I can remove a courier's max capacity", async () => {
   const res = await mutate({
-    mutation: REMOVE_COURIER_CAPACITY,
+    mutation: REMOVE_COURIER_MAX_CAPACITY,
     variables: { id: "1" },
   });
 

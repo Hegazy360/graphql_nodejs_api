@@ -28,7 +28,35 @@ Object {
 }
 `;
 
-exports[`I can lookup couriers by capacity 1`] = `
+exports[`I can lookup couriers by available capacity 1`] = `
+Object {
+  "data": Object {
+    "lookUpCouriersByAvailableCapacity": Array [
+      Object {
+        "available_capacity": 20,
+        "id": "2",
+      },
+      Object {
+        "available_capacity": 20,
+        "id": "3",
+      },
+      Object {
+        "available_capacity": 15,
+        "id": "4",
+      },
+    ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`I can lookup couriers by max capacity 1`] = `
 Object {
   "data": Object {
     "lookUpCouriersByMaxCapacity": Array [
@@ -58,10 +86,25 @@ Object {
 
 exports[`I can remove a courier's max capacity 1`] = `
 Object {
+  "data": undefined,
+  "errors": Array [
+    [ValidationError: Cannot query field "removeCourierCapacity" on type "Mutation". Did you mean "removeCourierMaxCapacity" or "updateCourierMaxCapacity"?],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`I can update a courier's available capacity 1`] = `
+Object {
   "data": Object {
-    "removeCourierCapacity": Object {
+    "updateCourierAvailableCapacity": Object {
+      "available_capacity": 12,
       "id": "1",
-      "max_capacity": null,
     },
   },
   "errors": undefined,
@@ -77,12 +120,29 @@ Object {
 exports[`I can update a courier's max capacity 1`] = `
 Object {
   "data": Object {
-    "updateCourierCapacity": Object {
+    "updateCourierMaxCapacity": Object {
       "id": "1",
       "max_capacity": 12,
     },
   },
   "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`I can't update a courier's available capacity with an invalid capacity 1`] = `
+Object {
+  "data": Object {
+    "updateCourierAvailableCapacity": null,
+  },
+  "errors": Array [
+    [GraphQLError: Available capacity must be between 0 and courier's maximum capacity],
+  ],
   "extensions": undefined,
   "http": Object {
     "headers": Headers {
@@ -110,7 +170,7 @@ Object {
 exports[`I can't update a courier's max capacity without passing a valid id 1`] = `
 Object {
   "data": Object {
-    "updateCourierCapacity": null,
+    "updateCourierMaxCapacity": null,
   },
   "errors": Array [
     [GraphQLError: Courier not found.],

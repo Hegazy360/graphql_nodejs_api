@@ -2,10 +2,12 @@
 
 type Query {
   getAllCouriers: [Courier!],
-  lookUpCouriersByMaxCapacity(capacity_required: Int!): [Courier!] 
+  lookUpCouriersByMaxCapacity(capacity_required: Int!): [Courier!],
+  lookUpCouriersByAvailableCapacity(capacity_required: Int!): [Courier!]
 }
 
 type Mutation {
-  updateCourierCapacity(id: ID!, max_capacity: Int!): Courier,
-  removeCourierCapacity(id: ID!): Courier,
+  updateCourierMaxCapacity(id: ID!, max_capacity: Int!): Courier,
+  updateCourierAvailableCapacity(id: ID!, available_capacity: Int!): Courier,
+  removeCourierMaxCapacity(id: ID!): Courier,
 }
