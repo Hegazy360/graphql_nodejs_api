@@ -1,12 +1,12 @@
 # Stuart Courier API
-## Stack:
+## Stack
 - API: GraphQL
 - Server: Express + Apollo
 - Language: TypeScript 
 - Testing: Jest
 - Deployment: Heroku
 
-## This API gives clients access to couriers to:
+## This API gives clients access to couriers to
 - Get a list of all available couriers
 - Update/remove a courier's maximum and/or available capacity
 - Lookup couriers by their maximum or available capacity using a client's required capacity
@@ -75,7 +75,7 @@ All endpoint are tested using Jest snapshot testing and an apollo test client.
 
 Tests can be improved by mocking data for all endpoints, an example on how we'd do so and the architecture I'd follow was left as a comment in the code in `tests/courier.test.ts`
 
-## Schema design:
+## Schema design
 One of the goals was to design a future-proof schema, to do so I've separated schemas by model and made use of `graphql-tools/load` to load all schemas in a synchronized way.
 
 I've also used the same architecture to define resolvers and separate them by model.
@@ -85,12 +85,12 @@ Using the same design for both, will allow us to easily define new endpoints lat
 ## Error Handling
 Basic error handling conditions were put in place to respond with clear error messages and error codes to help clients identify potential problems such as if a courier's id is wrong or doesn't exist.
 
-## Race conditions:
+## Race conditions
 GraphQL mutations were used to update couriers, unlike queries that run in parallel, mutations run in series, one after the other by design to avoid having race conditions.
 
 That's for mutations, but what if a client requests data (a query), and right after, these data were mutated? In that case we might have to rely on a subscription endpoint (That uses websockets) to allow live updates and ensure the client always has the latest data.
 
-## What I'd do if I had more time:
+## What I'd do if I had more time
 - Develop a client interface to showcase how the API can be used in a software.
 - Setup a CI pipeline to ensure tests pass before deploying branches
 - Improve API documentations by adding more info about each endpoint
