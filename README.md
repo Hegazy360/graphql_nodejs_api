@@ -15,47 +15,47 @@
 - To test the API easily, I've enabled graphQL playground on production.
 The playground can be accessed here https://stuart2.herokuapp.com/api/v1
 
-### Query example:
-```
-query {
-  getAllCouriers {
-    id
-    max_capacity
-    available_capacity
-  },
-  lookUpCouriersByMaxCapacity(capacity_required: 30) {
-    id
-    max_capacity
-    available_capacity
+  ### Query example:
+  ```
+  query {
+    getAllCouriers {
+      id
+      max_capacity
+      available_capacity
+    },
+    lookUpCouriersByMaxCapacity(capacity_required: 30) {
+      id
+      max_capacity
+      available_capacity
+    }
+    lookUpCouriersByAvailableCapacity(capacity_required: 12) {
+      id
+      max_capacity
+      available_capacity
+    }
   }
-  lookUpCouriersByAvailableCapacity(capacity_required: 12) {
-    id
-    max_capacity
-    available_capacity
-  }
-}
-```
+  ```
 
-### Mutation example
-```
-mutation {
-  updateCourierMaxCapacity(id: 3, max_capacity: 50) {
-    id
-    max_capacity
-    available_capacity
+  ### Mutation example
+  ```
+  mutation {
+    updateCourierMaxCapacity(id: 3, max_capacity: 50) {
+      id
+      max_capacity
+      available_capacity
+    }
+    updateCourierAvailableCapacity(id: 4, available_capacity: 40) {
+      id
+      max_capacity
+      available_capacity
+    }
+    removeCourierMaxCapacity(id: 1) {
+      id
+      max_capacity
+      available_capacity
+    }
   }
-  updateCourierAvailableCapacity(id: 4, available_capacity: 40) {
-    id
-    max_capacity
-    available_capacity
-  }
-  removeCourierMaxCapacity(id: 1) {
-    id
-    max_capacity
-    available_capacity
-  }
-}
-```
+  ```
 
 
 - To run the API locally:
